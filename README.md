@@ -1,5 +1,3 @@
-
-  
 # BigFloat
 Arbitrary-Precision Float Arithmetic Library 
 
@@ -14,4 +12,3 @@ Examples on how to use the library are found in:
 
 A simple makefile can be seen at:
   * makefile
-  
