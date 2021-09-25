@@ -13,11 +13,12 @@ BigFloat factorial(const BigFloat& n)
 }
 
 int main()
-{	
-	//200! takes 5 sec
-	//300! takes 20 sec,	615 cifre	--> compiled with -O6: 1 sec
-	//500! takes 115 sec, 	1135 cifre,	--> compiled with -O6: 4 sec
-	//1000! takes 1200 sec,	2568 cifre,	--> compiled with -O6: 47 sec
+{
+	//For reference, execution times on an old Core 2 Duo
+	//200!  --> 375 digits  - no optimization: 5 seconds
+	//300!  --> 615 digits  -	no optimization: 20 seconds,   compiled with -O3: 1 seconds
+	//500!  --> 1135 digits - no optimization: 115 seconds,	 compiled with -O3: 4 seconds
+	//1000! --> 2568 digits - no optimization: 1200 seconds, compiled with -O3: 47 seconds
 	BigFloat fact,num(1000);
 	fact = factorial(num);
 	std::cout<<fact<<std::endl;

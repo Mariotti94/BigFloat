@@ -14,7 +14,7 @@ int BigFloat::CompareNum(const BigFloat& left, const BigFloat& right)
 		return 1;
 	else if( (left.number.size() - left.decimals) < (right.number.size() - right.decimals) )
 		return 2;
-	
+
 	if(left.decimals>right.decimals)
 	{
 		BigFloat tmp;
@@ -24,7 +24,7 @@ int BigFloat::CompareNum(const BigFloat& left, const BigFloat& right)
 			tmp.decimals++;
 			tmp.number.push_front('0');
 		}
-		
+
 		for (int i= left.number.size() - 1 ; i>=0; i--)
 		{
 			if(left.number[i]>tmp.number[i])
@@ -43,7 +43,7 @@ int BigFloat::CompareNum(const BigFloat& left, const BigFloat& right)
 			tmp.decimals++;
 			tmp.number.push_front('0');
 		}
-		
+
 		for (int i= tmp.number.size() - 1 ; i>=0; i--)
 		{
 			if(tmp.number[i]>right.number[i])
@@ -80,7 +80,7 @@ BigFloat BigFloat::Sum(const BigFloat& left, const BigFloat& right)
 		val2 = ( i > right.number.size() -1 ) ? 0 : CharToInt(right.number[i]);
 
 		int aus= val1+val2+carry;
-		
+
 		carry=0;
 		if(aus>9)
 		{
@@ -88,11 +88,11 @@ BigFloat BigFloat::Sum(const BigFloat& left, const BigFloat& right)
 			aus = aus-10;
 		}
 
-		tmp.number.push_back(IntToChar(aus));	
+		tmp.number.push_back(IntToChar(aus));
 	}
 	if(carry!=0)
 		tmp.number.push_back(IntToChar(carry));
-			
+
 	return tmp;
 };
 
@@ -101,15 +101,15 @@ BigFloat BigFloat::Subtract(const BigFloat& left, const BigFloat& right)
 	BigFloat tmp;
 	int carry=0;
 	int aus;
-		
+
 	for (int i=0; i<left.number.size(); ++i)
 	{
 		int val1, val2;
-		val1 = CharToInt(left.number[i]);	
+		val1 = CharToInt(left.number[i]);
 		val2 = ( i > right.number.size() -1 ) ? 0 : CharToInt(right.number[i]);
-		
+
 		val1 -= carry;
-		
+
 		if(val1<val2)
 		{
 			aus= 10 + val1 - val2;
@@ -120,10 +120,10 @@ BigFloat BigFloat::Subtract(const BigFloat& left, const BigFloat& right)
 			aus = val1 - val2;
 			carry = 0;
 		}
-		
-		tmp.number.push_back(IntToChar(aus));	
+
+		tmp.number.push_back(IntToChar(aus));
 	}
-	
+
 	return tmp;
 };
 
@@ -141,7 +141,7 @@ BigFloat BigFloat::Multiply(const BigFloat& left, const BigFloat& right)
 		{
 			tmp.number.push_front('0');
 		}
-		
+
 		for (int j=0; j<left.number.size() ; ++j)
 		{
 			int aus= CharToInt(right.number[i]) * CharToInt(left.number[j]) + carry;
@@ -156,7 +156,7 @@ BigFloat BigFloat::Multiply(const BigFloat& left, const BigFloat& right)
 			}
 			tmp.number.push_back(IntToChar(aus));
 		}
-		
+
 		if(carry!=0)
 			tmp.number.push_back(IntToChar(carry));
 		carry=0;
@@ -164,7 +164,7 @@ BigFloat BigFloat::Multiply(const BigFloat& left, const BigFloat& right)
 		ris= Sum(ris,tmp);
 		tmp.number.clear();
 	}
-	
+
 	return ris;
 };
 
@@ -177,7 +177,7 @@ BigFloat& BigFloat::operator=(const char* strNum)
 	decimals=0;
 	sign='\0';
 	error=0;
-	
+
 	int count=0;
 	if(strNum[count]=='+')
 	{
@@ -197,9 +197,9 @@ BigFloat& BigFloat::operator=(const char* strNum)
 		error_code="Unset";
 		return *this;
 	}
-	
+
 	bool start_dec = false;
-		
+
 	while(strNum[count]!='\0')
 	{
 		if(!start_dec)
@@ -215,7 +215,7 @@ BigFloat& BigFloat::operator=(const char* strNum)
 				start_dec = true;
 				count++;
 			}
-						
+
 		if(isdigit(strNum[count]))
 		{
 			number.push_front(strNum[count]);
@@ -263,11 +263,11 @@ BigFloat operator+ ( const BigFloat& left_, const BigFloat& right_ )
 	{
 		return tmp;
 	}
-	
+
 	BigFloat left,right;
 	left=left_;
 	right=right_;
-	
+
 	if(left.decimals>right.decimals)
 		while(left.decimals>right.decimals)
 		{
@@ -280,7 +280,7 @@ BigFloat operator+ ( const BigFloat& left_, const BigFloat& right_ )
 				left.decimals++;
 				left.number.push_front('0');
 			}
-	
+
 	if( (left.sign=='+')&& (right.sign=='-'))
 	{
 		int check= BigFloat::CompareNum(left,right);
@@ -335,7 +335,7 @@ BigFloat operator+ ( const BigFloat& left_, const BigFloat& right_ )
 			return tmp;
 		}
 	}
-	
+
 	if( (left.sign=='+')&& (right.sign=='+'))
 	{
 		tmp=BigFloat::Sum(left,right);
@@ -376,11 +376,11 @@ BigFloat operator- ( const BigFloat& left_, const BigFloat& right_ )
 	{
 		return tmp;
 	}
-	
+
 	BigFloat left,right;
 	left=left_;
 	right=right_;
-	
+
 	if(left.decimals>right.decimals)
 		while(left.decimals>right.decimals)
 		{
@@ -393,7 +393,7 @@ BigFloat operator- ( const BigFloat& left_, const BigFloat& right_ )
 				left.decimals++;
 				left.number.push_front('0');
 			}
-	
+
 	if( (left.sign=='+')&& (right.sign=='-'))
 	{
 		tmp=BigFloat::Sum(left,right);
@@ -410,7 +410,7 @@ BigFloat operator- ( const BigFloat& left_, const BigFloat& right_ )
 		tmp.error=0;
 		return tmp;
 	}
-	
+
 	if( (left.sign=='+')&& (right.sign=='+'))
 	{
 		int check= BigFloat::CompareNum(left,right);
@@ -438,7 +438,7 @@ BigFloat operator- ( const BigFloat& left_, const BigFloat& right_ )
 			return tmp;
 		}
 	}
-	
+
 	if( (left.sign=='-')&& (right.sign=='-'))
 	{
 		int check= BigFloat::CompareNum(left,right);
@@ -465,7 +465,7 @@ BigFloat operator- ( const BigFloat& left_, const BigFloat& right_ )
 			tmp.error=0;
 			return tmp;
 		}
-	}	
+	}
 };
 
 BigFloat operator-(const BigFloat& left, const int& int_right)
@@ -489,24 +489,24 @@ BigFloat operator*(const BigFloat& left, const BigFloat& right)
 	{
 		return tmp;
 	}
-	
+
 	tmp=BigFloat::Multiply(left,right);
 	if( ((left.sign=='-')&& (right.sign=='-')) || ((left.sign=='+')&& (right.sign=='+')) )
 		tmp.sign='+';
 	else
 		tmp.sign='-';
-		
+
 	tmp.decimals=left.decimals+right.decimals;
 	tmp.error=0;
 	tmp.LeadTrim();
-	
+
 	return tmp;
 };
 
 BigFloat operator*(const BigFloat& left, const int& int_right)
 {
 	BigFloat right;
-	right = int_right; 
+	right = int_right;
 	return left * right;
 };
 
@@ -520,33 +520,33 @@ BigFloat operator*(const BigFloat& left, const double& double_right)
 BigFloat operator/(const BigFloat& left, const BigFloat& right)
 {
 	BigFloat tmp;
-	
+
 	if( (left.error) || (right.error) )
 	{
 		return tmp;
 	}
-	
+
 	BigFloat Q , R , D , N,  zero ;
 	zero = 0;
-	
+
 	if (right == zero)
-	{	
+	{
 		tmp.error_code="Division For 0";
 		return tmp;
 	}
-	
+
 	N= ( left>zero ) ? (left) : (left * (-1));
 	D= ( right>zero ) ? (right) : (right* (-1));
 	R.sign='+';
 	R.error=0;
-	
+
 	while( (N.decimals!=0) || (D.decimals!=0) )
 	{
 		if(N.decimals==0)
 			N.number.push_front('0');
 		else
 			N.decimals--;
-			
+
 		if(D.decimals==0)
 			D.number.push_front('0');
 		else
@@ -554,12 +554,12 @@ BigFloat operator/(const BigFloat& left, const BigFloat& right)
 	}
 	N.LeadTrim();
 	D.LeadTrim();
-	
+
 	//Increase Precision to highest decimal quote
 	int div_precision = (left.decimals>right.decimals) ? (left.decimals) : (right.decimals) ;
 	for (int i=0; i < div_precision ; i++)
 		N.number.push_front('0');
-	
+
 	int check= BigFloat::CompareNum(N,D);
 
 	if(check==0)
@@ -568,7 +568,7 @@ BigFloat operator/(const BigFloat& left, const BigFloat& right)
 	}
 	if(check==2)
 	{
-		return zero;	
+		return zero;
 	}
 	else
 	{
@@ -576,21 +576,21 @@ BigFloat operator/(const BigFloat& left, const BigFloat& right)
 		{
 			R.number.push_front(*(N.number.rbegin()));
 			N.number.pop_back();
-			
+
 			bool is_zero=true;
 			std::deque<char>::const_iterator zero_iter = R.number.begin();
 			for(;zero_iter!= R.number.end();++zero_iter)
 				if(*zero_iter!='0')
 					is_zero=false;
-				
+
 			if((R>=D) && (!is_zero))
 			{
 				int Q_sub=0;
 				int min=0;
 				int max = 9;
-				
+
 				while( R >= D)
-				{	
+				{
 					int avg = max-min;
 					int mod_avg = avg / 2;
 					avg= (avg - mod_avg * 2) ? (mod_avg + 1) : (mod_avg);
@@ -605,13 +605,13 @@ BigFloat operator/(const BigFloat& left, const BigFloat& right)
 					{
 						Q_sub = Q_sub + avg;
 						R = R - D * avg;
-						
+
 						max = 9;
 					}
 				}
-				
+
 				Q.number.push_front(BigFloat::IntToChar(Q_sub));
-				
+
 				bool is_zero=true;
 				std::deque<char>::const_iterator zero_iter = R.number.begin();
 				for(;zero_iter!= R.number.end();++zero_iter)
@@ -619,23 +619,23 @@ BigFloat operator/(const BigFloat& left, const BigFloat& right)
 						is_zero=false;
 				if(is_zero)
 					R.number.clear();
-						
+
 			}
 			else
 			{
-				Q.number.push_front('0');	
+				Q.number.push_front('0');
 			}
 		}
 		tmp = Q;
 	}
-	
+
 	if( ((left.sign=='-')&& (right.sign=='-')) || ((left.sign=='+')&& (right.sign=='+')) )
 		tmp.sign='+';
 	else
 		tmp.sign='-';
-	
+
 	tmp.decimals = div_precision;
-	tmp.error=0;	
+	tmp.error=0;
 	tmp.LeadTrim();
 
 	return tmp;
@@ -658,28 +658,28 @@ BigFloat operator/(const BigFloat& left, const double& double_right)
 BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right,int div_precision)
 {
 	BigFloat tmp;
-	
+
 	BigFloat Q , R , D , N,  zero ;
 	zero = 0;
-	
+
 	if (right == zero)
 	{
 		tmp.error_code="Division For 0";
 		return tmp;
 	}
-	
+
 	N= ( left>zero ) ? (left) : (left * (-1));
 	D= ( right>zero ) ? (right) : (right* (-1));
 	R.sign='+';
 	R.error=0;
-	
+
 	while( (N.decimals!=0) || (D.decimals!=0) )
 	{
 		if(N.decimals==0)
 			N.number.push_front('0');
 		else
 			N.decimals--;
-			
+
 		if(D.decimals==0)
 			D.number.push_front('0');
 		else
@@ -687,11 +687,11 @@ BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right,int div_p
 	}
 	N.LeadTrim();
 	D.LeadTrim();
-	
+
 	//Increase Precision to div_precision
 	for (int i=0; i < div_precision ; i++)
 		N.number.push_front('0');
-	
+
 	int check= BigFloat::CompareNum(N,D);
 
 	if(check==0)
@@ -700,7 +700,7 @@ BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right,int div_p
 	}
 	if(check==2)
 	{
-		return zero;	
+		return zero;
 	}
 	else
 	{
@@ -708,21 +708,21 @@ BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right,int div_p
 		{
 			R.number.push_front(*(N.number.rbegin()));
 			N.number.pop_back();
-			
+
 			bool is_zero=true;
 			std::deque<char>::const_iterator zero_iter = R.number.begin();
 			for(;zero_iter!= R.number.end();++zero_iter)
 				if(*zero_iter!='0')
 					is_zero=false;
-				
+
 			if((R>=D) && (!is_zero))
 			{
 				int Q_sub=0;
 				int min=0;
 				int max = 9;
-				
+
 				while( R >= D)
-				{	
+				{
 					int avg = max-min;
 					int mod_avg = avg / 2;
 					avg= (avg - mod_avg * 2) ? (mod_avg + 1) : (mod_avg);
@@ -737,13 +737,13 @@ BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right,int div_p
 					{
 						Q_sub = Q_sub + avg;
 						R = R - D * avg;
-						
+
 						max = 9;
 					}
 				}
-				
+
 				Q.number.push_front(BigFloat::IntToChar(Q_sub));
-				
+
 				bool is_zero=true;
 				std::deque<char>::const_iterator zero_iter = R.number.begin();
 				for(;zero_iter!= R.number.end();++zero_iter)
@@ -751,71 +751,71 @@ BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right,int div_p
 						is_zero=false;
 				if(is_zero)
 					R.number.clear();
-						
+
 			}
 			else
 			{
-				Q.number.push_front('0');	
+				Q.number.push_front('0');
 			}
 		}
 		tmp = Q;
 	}
-	
+
 	if( ((left.sign=='-')&& (right.sign=='-')) || ((left.sign=='+')&& (right.sign=='+')) )
 		tmp.sign='+';
 	else
 		tmp.sign='-';
-	
+
 	tmp.decimals = div_precision;
 	tmp.error=0;
 	tmp.LeadTrim();
-	
+
 	return tmp;
 };
 
 BigFloat BigFloat::PrecDiv(const BigFloat& left, const int& int_right,int div_precision)
 {
 	BigFloat right;
-	right = int_right; 
+	right = int_right;
 	return BigFloat::PrecDiv(left,right,div_precision);
 };
 
 BigFloat BigFloat::PrecDiv(const BigFloat& left, const double& double_right,int div_precision)
 {
 	BigFloat right;
-	right = double_right; 
+	right = double_right;
 	return BigFloat::PrecDiv(left,right,div_precision);
 };
 
 BigFloat operator%(const BigFloat& left, const BigFloat& right)
 {
 	BigFloat tmp;
-	
+
 	if( (left.error) || (right.error) )
 	{
 		return tmp;
 	}
-	
+
 	if( (left.decimals!=0) || (right.decimals!=0) )
 	{
 		tmp.error_code="Modulus Between Non Integers";
 		return tmp;
 	}
-	
+
 	BigFloat Q , R , D , N,  zero, ret;
 	zero = 0;
-	
+
 	if (right == zero)
 	{
 		tmp.error_code="Modulus For 0";
 		return tmp;
 	}
-	
+
 	N= ( left>zero ) ? (left) : (left * (-1)) ;
 	D= ( right>zero ) ? (right) : (right* (-1)) ;
 	R.sign='+';
 	R.error=0;
-	
+
 	int check= BigFloat::CompareNum(N,D);
 
 	if(check==0)
@@ -824,7 +824,7 @@ BigFloat operator%(const BigFloat& left, const BigFloat& right)
 	}
 	if(check==2)
 	{
-		return left;	
+		return left;
 	}
 	else
 	{
@@ -832,21 +832,21 @@ BigFloat operator%(const BigFloat& left, const BigFloat& right)
 		{
 			R.number.push_front(*(N.number.rbegin()));
 			N.number.pop_back();
-			
+
 			bool is_zero=true;
 			std::deque<char>::const_iterator zero_iter = R.number.begin();
 			for(;zero_iter!= R.number.end();++zero_iter)
 				if(*zero_iter!='0')
 					is_zero=false;
-				
+
 			if((R>=D) && (!is_zero))
-			{		
+			{
 				int Q_sub=0;
 				int min=0;
 				int max = 9;
-				
+
 				while( R >= D)
-				{	
+				{
 					int avg = max-min;
 					int mod_avg = avg / 2;
 					avg= (avg - mod_avg * 2) ? (mod_avg + 1) : (mod_avg);
@@ -861,34 +861,34 @@ BigFloat operator%(const BigFloat& left, const BigFloat& right)
 					{
 						Q_sub = Q_sub + avg;
 						R = R - D * avg;
-						
+
 						max = 9;
 					}
 				}
-				
+
 				Q.number.push_front(BigFloat::IntToChar(Q_sub));
 				ret = R;
-				
+
 				bool is_zero=true;
 				std::deque<char>::const_iterator zero_iter = R.number.begin();
 				for(;zero_iter!= R.number.end();++zero_iter)
 					if(*zero_iter!='0')
 						is_zero=false;
 				if(is_zero)
-					R.number.clear();			
+					R.number.clear();
 			}
 			else
 			{
 				ret = R;
-				Q.number.push_front('0');	
+				Q.number.push_front('0');
 			}
 		}
-		
+
 		Q.LeadTrim();
 		ret.LeadTrim();
 		tmp = ret;
 	}
-	
+
 	if( ((left.sign=='-')&& (right.sign=='-')) || ((left.sign=='+')&& (right.sign=='+')) )
 		tmp.sign='+';
 	else
@@ -906,15 +906,15 @@ BigFloat operator%(const BigFloat& left, const int& int_right)
 
 	BigFloat right;
 	right = int_right;
-	return left % right;	
+	return left % right;
 };
 
 //Comparators
 bool BigFloat::operator== (const BigFloat& right) const
-{	
+{
 	if( (error) || (right.error) )
 		return false;
-		
+
 	int check = CompareNum(*this,right);
 	if ((check == 0)&&(sign==right.sign))
 		return true;
@@ -934,10 +934,10 @@ bool BigFloat::operator== (const double& double_right) const
 };
 
 bool BigFloat::operator!= (const BigFloat& right) const
-{	
+{
 	if( (error) || (right.error) )
 		return false;
-		
+
 	return !(*this==right);
 };
 
@@ -957,7 +957,7 @@ bool BigFloat::operator> (const BigFloat& right) const
 {
 	if( (error) || (right.error) )
 		return false;
-		
+
 	if( ((sign=='+')&& (right.sign=='+')) )
 	{
 		int check = CompareNum(*this,right);
@@ -975,7 +975,7 @@ bool BigFloat::operator> (const BigFloat& right) const
 	if( ((sign=='-')&& (right.sign=='+')) )
 		return false;
 	if( ((sign=='+')&& (right.sign=='-')) )
-		return true;	
+		return true;
 };
 
 bool BigFloat::operator> (const int& int_right) const
@@ -1013,7 +1013,7 @@ bool BigFloat::operator< (const BigFloat& right) const
 {
 	if( (error) || (right.error) )
 		return false;
-		
+
 	if( ((sign=='+')&& (right.sign=='+')) )
 	{
 		int check = CompareNum(*this,right);
@@ -1031,7 +1031,7 @@ bool BigFloat::operator< (const BigFloat& right) const
 	if( ((sign=='-')&& (right.sign=='+')) )
 		return true;
 	if( ((sign=='+')&& (right.sign=='-')) )
-		return false;	
+		return false;
 };
 
 bool BigFloat::operator< (const int& int_right) const
@@ -1073,16 +1073,16 @@ std::ostream& operator<<(std::ostream& out, const BigFloat& right)
 		out<<"nan";
 		return out;
 	}
-	
+
 	out<<right.sign;
-	for (int i=right.number.size()-1; i>=0; --i) 
+	for (int i=right.number.size()-1; i>=0; --i)
 	{
 		out << right.number[i];
 		if((i==right.decimals)&&(i!=0))
 			out <<'.';
 	}
 	return out;
-	
+
 };
 
 std::istream& operator>>(std::istream& in, BigFloat& right)
@@ -1095,15 +1095,15 @@ std::istream& operator>>(std::istream& in, BigFloat& right)
 
 //Transformation Methods
 double BigFloat::ToDouble() const
-{	
+{
 	double var = 0;
-	
+
 	if(error)
 	{
 		var=std::nan("");
 		return var;
 	}
-	
+
 	double dec = 1;
 	if(decimals>0)
 	{
@@ -1114,29 +1114,29 @@ double BigFloat::ToDouble() const
 			aus--;
 		}
 	}
-		
+
 	for(int i = 0 ; i< number.size(); i++)
-	{			
+	{
 		var += CharToInt(number[i])*dec;
 		dec*=10;
 	}
-	
+
 	if (sign=='-')
 		var *= -1;
-		
+
 	return var;
 };
 
 float BigFloat::ToFloat() const
 {
 	float var = 0;
-	
+
 	if(error)
 	{
 		var=std::nan("");
 		return var;
 	}
-	
+
 	float dec = 1;
 	if(decimals>0)
 	{
@@ -1147,16 +1147,16 @@ float BigFloat::ToFloat() const
 			aus--;
 		}
 	}
-		
+
 	for(int i = 0 ; i< number.size(); i++)
-	{			
+	{
 		var += CharToInt(number[i])*dec;
 		dec*=10;
 	}
-	
+
 	if (sign=='-')
 		var *= -1;
-		
+
 	return var;
 };
 
@@ -1164,7 +1164,7 @@ std::string BigFloat::ToString() const
 {
 	std::string var;
 	std::stringstream ss;
-	
+
 	if(error)
 	{
 		var="nan";
@@ -1175,7 +1175,7 @@ std::string BigFloat::ToString() const
 		ss<<sign;
 	}
 	for(int i = number.size()-1 ; i>=0 ; i--)
-	{	
+	{
 		ss<<number[i];
 		if( (i==decimals)&&(i!=0) )
 			ss<<".";
@@ -1231,7 +1231,7 @@ void BigFloat::LeadTrim()
 		if(number[i]=='0')
 			number.pop_back();
 		else
-			break;		
+			break;
 	}
 };
 
@@ -1241,8 +1241,8 @@ void BigFloat::TrailTrim()
 	if(!error)
 		while(  (number[0]=='0') && (decimals > 0) )
 		{
-				number.pop_front();	
-				decimals--;		
+				number.pop_front();
+				decimals--;
 		}
 };
 
@@ -1258,12 +1258,12 @@ std::string BigFloat::Exp() const
 
 	int check = BigFloat::CompareNum(*this,BigFloat(1));
 	if( check == 0)
-	{	
+	{
 		out<<sign;
 		out<<"1e+0";
 	}
 	if( check == 1)
-	{	
+	{
 		out<<sign;
 		int i = number.size()-1;
 		out<< number[i];
@@ -1271,7 +1271,7 @@ std::string BigFloat::Exp() const
 		if(i>0)
 		{
 			out<<'.';
-			for (; (i>=(int)number.size()-6) && (i>=0) ; --i) 
+			for (; (i>=(int)number.size()-6) && (i>=0) ; --i)
 			{
 				out << number[i];
 			}
@@ -1295,7 +1295,7 @@ std::string BigFloat::Exp() const
 		else
 		{
 			out<<sign<<number[count]<<'.';
-			for (int i=count-1; (i>=(int)count-5) && (i>=0) ; --i) 
+			for (int i=count-1; (i>=(int)count-5) && (i>=0) ; --i)
 			{
 				out << number[i];
 			}
