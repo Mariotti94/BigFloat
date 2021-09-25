@@ -1,14 +1,16 @@
 # BigFloat
-Arbitrary-Precision Float Arithmetic Library 
+Arbitrary-Precision Floating Point Arithmetic Library.  
+Implements a C++ class that allows you to create floats of arbitrary size, with no limit on integer digits and selectable limit on fractional digits.  
+This data structure can be handy when you want to avoid overflow or for accurate division.
 
 ## Usage
-The library files are:
+Simple makefile:
+  * Makefile
+
+Library files:
   * BigFloat.h
   * BigFloat.cpp
 
-Examples on how to use the library are found in:
-  * MainTest.cpp
+Examples of library usage:
+  * Test.cpp
   * Factorial.cpp
-
-A simple makefile can be seen at:
-  * makefile
