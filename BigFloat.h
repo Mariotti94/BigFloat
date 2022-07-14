@@ -33,6 +33,7 @@ class BigFloat
 		static BigFloat Sum(const BigFloat& left, const BigFloat& right);
 		static BigFloat Subtract(const BigFloat& left, const BigFloat& right);
 		static BigFloat Multiply(const BigFloat& left, const BigFloat& right);
+		static BigFloat Pow(const BigFloat& left, const BigFloat& right);
 
 	public:
 		//Constructors
@@ -70,6 +71,10 @@ class BigFloat
 
 		friend BigFloat operator%(const BigFloat& left, const BigFloat& right);
 		friend BigFloat operator%(const BigFloat& left, const int& int_right);
+
+		static BigFloat Power(const BigFloat& left, const BigFloat& right, int div_precision = 0);
+		static BigFloat Power(const BigFloat& left, const int& int_right,int div_precision = 0);
+		static BigFloat Power(const BigFloat& left, const double& double_right,int div_precision = 0);
 
 		BigFloat& operator++(int i) { *this = *this+1; return *this; };
 		BigFloat& operator++() { *this = *this+1; return *this; };

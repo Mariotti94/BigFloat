@@ -69,7 +69,7 @@ int BigFloat::CompareNum(const BigFloat& left, const BigFloat& right)
 //Operations without sign and decimals, utilized by Operations
 BigFloat BigFloat::Sum(const BigFloat& left, const BigFloat& right)
 {
- 	BigFloat tmp;
+	BigFloat tmp;
 	int carry=0;
 	int loopsize = (left.number.size()>right.number.size()) ? left.number.size() : right.number.size();
 
@@ -166,6 +166,16 @@ BigFloat BigFloat::Multiply(const BigFloat& left, const BigFloat& right)
 	}
 
 	return ris;
+};
+
+BigFloat BigFloat::Pow(const BigFloat& left, const BigFloat& right)
+{
+	if (right == 0)
+		return 1;
+	else if (right%2 == 0)
+		return BigFloat::Pow(left, right/2) * BigFloat::Pow(left, right/2);
+	else
+		return left * BigFloat::Pow(left, right/2) * BigFloat::Pow(left, right/2);
 };
 
 //------------------------Public Methods--------------------------------
@@ -655,7 +665,7 @@ BigFloat operator/(const BigFloat& left, const double& double_right)
 	return left / right;
 };
 
-BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right,int div_precision)
+BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right, int div_precision)
 {
 	BigFloat tmp;
 
@@ -773,14 +783,14 @@ BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right,int div_p
 	return tmp;
 };
 
-BigFloat BigFloat::PrecDiv(const BigFloat& left, const int& int_right,int div_precision)
+BigFloat BigFloat::PrecDiv(const BigFloat& left, const int& int_right, int div_precision)
 {
 	BigFloat right;
 	right = int_right;
 	return BigFloat::PrecDiv(left,right,div_precision);
 };
 
-BigFloat BigFloat::PrecDiv(const BigFloat& left, const double& double_right,int div_precision)
+BigFloat BigFloat::PrecDiv(const BigFloat& left, const double& double_right, int div_precision)
 {
 	BigFloat right;
 	right = double_right;
@@ -907,6 +917,41 @@ BigFloat operator%(const BigFloat& left, const int& int_right)
 	BigFloat right;
 	right = int_right;
 	return left % right;
+};
+
+BigFloat BigFloat::Power(const BigFloat& left, const BigFloat& right, int div_precision)
+{
+	BigFloat tmp;
+
+	tmp = BigFloat::Pow(left, right);
+
+	tmp.sign='+';
+	if(left.sign=='-')
+		if(right%2 != 0)
+			tmp.sign='-';
+
+	tmp.decimals = left.decimals;
+	tmp.error=0;
+	tmp.LeadTrim();
+
+	if(right.sign=='-')
+		tmp = BigFloat::PrecDiv(1, tmp, div_precision);
+
+	return tmp;
+};
+
+BigFloat BigFloat::Power(const BigFloat& left, const int& int_right, int div_precision)
+{
+	BigFloat right;
+	right = int_right;
+	return BigFloat::Power(left,right,div_precision);
+};
+
+BigFloat BigFloat::Power(const BigFloat& left, const double& double_right, int div_precision)
+{
+	BigFloat right;
+	right = double_right;
+	return BigFloat::Power(left,right,div_precision);
 };
 
 //Comparators

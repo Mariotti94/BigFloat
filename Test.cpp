@@ -80,6 +80,12 @@ int main()
 	c=a%b;
 	std::cout<<"a%b "<<c<<std::endl;
 
+	c=BigFloat::Power(a,b);
+	std::cout<<"Power(a,b) "<<c<<std::endl;
+
+	c=BigFloat::Power(a,b,10); //for negative exponents
+	std::cout<<"Power(a,b,10) "<<c<<std::endl;
+
 	//Comparation Test
 	std::cout<<std::endl;
 	std::cout<<"a==b "<< (a==b) <<std::endl;
