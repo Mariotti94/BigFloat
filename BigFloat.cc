@@ -71,9 +71,9 @@ BigFloat BigFloat::Sum(const BigFloat& left, const BigFloat& right)
 {
 	BigFloat tmp;
 	int carry=0;
-	int loopsize = (left.number.size()>right.number.size()) ? left.number.size() : right.number.size();
+	size_t loopsize = (left.number.size()>right.number.size()) ? left.number.size() : right.number.size();
 
-	for (int i=0; i<loopsize; ++i)
+	for (size_t i=0; i<loopsize; ++i)
 	{
 		int val1, val2;
 		val1 = ( i > left.number.size() -1) ? 0 : CharToInt(left.number[i]);
@@ -102,7 +102,7 @@ BigFloat BigFloat::Subtract(const BigFloat& left, const BigFloat& right)
 	int carry=0;
 	int aus;
 
-	for (int i=0; i<left.number.size(); ++i)
+	for (size_t i=0; i<left.number.size(); ++i)
 	{
 		int val1, val2;
 		val1 = CharToInt(left.number[i]);
@@ -135,14 +135,14 @@ BigFloat BigFloat::Multiply(const BigFloat& left, const BigFloat& right)
 	ris.number.push_back('0');
 	int carry=0;
 
-	for (int i=0; i<right.number.size(); ++i)
+	for (size_t i=0; i<right.number.size(); ++i)
 	{
-		for (int k=0; k<i ; ++k)
+		for (size_t k=0; k<i ; ++k)
 		{
 			tmp.number.push_front('0');
 		}
 
-		for (int j=0; j<left.number.size() ; ++j)
+		for (size_t j=0; j<left.number.size() ; ++j)
 		{
 			int aus= CharToInt(right.number[i]) * CharToInt(left.number[j]) + carry;
 			carry=0;
@@ -362,6 +362,7 @@ BigFloat operator+ ( const BigFloat& left_, const BigFloat& right_ )
 		tmp.error=0;
 		return tmp;
 	}
+	return BigFloat(); // all cases are covered above, this is only to prevent compiler warnings
 };
 
 BigFloat operator+(const BigFloat& left, const int& int_right)
@@ -476,6 +477,7 @@ BigFloat operator- ( const BigFloat& left_, const BigFloat& right_ )
 			return tmp;
 		}
 	}
+	return BigFloat(); // all cases are covered above, this is only to prevent compiler warnings
 };
 
 BigFloat operator-(const BigFloat& left, const int& int_right)
@@ -1021,6 +1023,7 @@ bool BigFloat::operator> (const BigFloat& right) const
 		return false;
 	if( ((sign=='+')&& (right.sign=='-')) )
 		return true;
+	return false;
 };
 
 bool BigFloat::operator> (const int& int_right) const
@@ -1077,6 +1080,7 @@ bool BigFloat::operator< (const BigFloat& right) const
 		return true;
 	if( ((sign=='+')&& (right.sign=='-')) )
 		return false;
+	return false;
 };
 
 bool BigFloat::operator< (const int& int_right) const
@@ -1160,7 +1164,7 @@ double BigFloat::ToDouble() const
 		}
 	}
 
-	for(int i = 0 ; i< number.size(); i++)
+	for(size_t i = 0 ; i< number.size(); i++)
 	{
 		var += CharToInt(number[i])*dec;
 		dec*=10;
@@ -1193,7 +1197,7 @@ float BigFloat::ToFloat() const
 		}
 	}
 
-	for(int i = 0 ; i< number.size(); i++)
+	for(size_t i = 0 ; i< number.size(); i++)
 	{
 		var += CharToInt(number[i])*dec;
 		dec*=10;
