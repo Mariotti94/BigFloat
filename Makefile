@@ -1,5 +1,5 @@
 CC = g++
-OBJ_FLAGS = -std=c++11 -O3
+OBJ_FLAGS = -std=c++11 -O3 -Wall
 BIN_FILES = Test Factorial
 
 all: ${BIN_FILES}
