@@ -15,8 +15,8 @@ int main()
 {
     //For reference, execution times on an old Core 2 Duo
     //200!  --> 375 digits  - no optimization: 5 seconds
-    //300!  --> 615 digits  -	no optimization: 20 seconds,   compiled with -O3: 1 seconds
-    //500!  --> 1135 digits - no optimization: 115 seconds,	 compiled with -O3: 4 seconds
+    //300!  --> 615 digits  - no optimization: 20 seconds,   compiled with -O3: 1 seconds
+    //500!  --> 1135 digits - no optimization: 115 seconds,  compiled with -O3: 4 seconds
     //1000! --> 2568 digits - no optimization: 1200 seconds, compiled with -O3: 47 seconds
     BigFloat fact, num(1000);
     fact = factorial(num);

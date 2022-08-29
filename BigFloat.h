@@ -153,10 +153,10 @@ public:
     double ToDouble() const;
     float ToFloat() const;
     std::string ToString() const;
-    void SetPrecision(int prec);	//Approximate number or Increase number decimals
+    void SetPrecision(int prec); //Approximate number or Increase number decimals
 
-    void LeadTrim();    //Remove number leading zeros, utilized by Operations without sign
-    void TrailTrim();	 //Remove number non significant trailing zeros
+    void LeadTrim(); //Remove number leading zeros, utilized by Operations without sign
+    void TrailTrim(); //Remove number non significant trailing zeros
 
     //Error Checking
     inline bool HasError() const
