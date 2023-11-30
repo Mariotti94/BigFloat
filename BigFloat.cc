@@ -342,6 +342,21 @@ BigFloat operator+(const BigFloat& left, const double& double_right)
     return left + right;
 };
 
+BigFloat& BigFloat::operator+=(const BigFloat& right_)
+{
+    return (*this = *this + right_);
+}
+
+BigFloat& BigFloat::operator+=(const int& int_right)
+{
+    return (*this = *this + int_right);
+}
+
+BigFloat& BigFloat::operator+=(const double& double_right)
+{
+    return (*this = *this + double_right);
+}
+
 BigFloat operator-(const BigFloat& left_, const BigFloat& right_)
 {
     BigFloat tmp;
@@ -444,6 +459,21 @@ BigFloat operator-(const BigFloat& left, const double& double_right)
     return left - right;
 };
 
+BigFloat& BigFloat::operator-=(const BigFloat& right_)
+{
+    return (*this = *this - right_);
+}
+
+BigFloat& BigFloat::operator-=(const int& int_right)
+{
+    return (*this = *this - int_right);
+}
+
+BigFloat& BigFloat::operator-=(const double& double_right)
+{
+    return (*this = *this - double_right);
+}
+
 BigFloat operator*(const BigFloat& left, const BigFloat& right)
 {
     BigFloat tmp;
@@ -477,6 +507,21 @@ BigFloat operator*(const BigFloat& left, const double& double_right)
     right = double_right;
     return left * right;
 };
+
+BigFloat& BigFloat::operator*=(const BigFloat& right_)
+{
+    return (*this = *this * right_);
+}
+
+BigFloat& BigFloat::operator*=(const int& int_right)
+{
+    return (*this = *this * int_right);
+}
+
+BigFloat& BigFloat::operator*=(const double& double_right)
+{
+    return (*this = *this * double_right);
+}
 
 BigFloat operator/(const BigFloat& left, const BigFloat& right)
 {
@@ -603,6 +648,21 @@ BigFloat operator/(const BigFloat& left, const double& double_right)
     right = double_right;
     return left / right;
 };
+
+BigFloat& BigFloat::operator/=(const BigFloat& right_)
+{
+    return (*this = *this / right_);
+}
+
+BigFloat& BigFloat::operator/=(const int& int_right)
+{
+    return (*this = *this / int_right);
+}
+
+BigFloat& BigFloat::operator/=(const double& double_right)
+{
+    return (*this = *this / double_right);
+}
 
 BigFloat BigFloat::PrecDiv(const BigFloat& left, const BigFloat& right, int div_precision)
 {
@@ -829,11 +889,20 @@ BigFloat operator%(const BigFloat& left, const BigFloat& right)
 
 BigFloat operator%(const BigFloat& left, const int& int_right)
 {
-
     BigFloat right;
     right = int_right;
     return left % right;
 };
+
+BigFloat& BigFloat::operator%=(const BigFloat& right)
+{
+    return (*this = *this % right);
+}
+
+BigFloat& BigFloat::operator%=(const int& int_right)
+{
+    return (*this = *this % int_right);
+}
 
 BigFloat BigFloat::Power(const BigFloat& left, const BigFloat& right, int div_precision)
 {
@@ -1051,6 +1120,22 @@ std::istream& operator>>(std::istream& in, BigFloat& right)
     right = c;
     return in;
 };
+
+
+BigFloat::operator double() const
+{
+    return this->ToDouble();
+}
+
+BigFloat::operator float() const
+{
+    return this->ToFloat();
+}
+
+BigFloat::operator std::string() const
+{
+    return this->ToString();
+}
 
 //Transformation Methods
 double BigFloat::ToDouble() const

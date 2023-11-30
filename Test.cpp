@@ -100,12 +100,24 @@ int main()
     std::cout << "ToFloat " << a.ToFloat() << std::endl;
     std::cout << "ToString " << a.ToString() << std::endl;
 
+    std::cout << std::endl;
+    std::cout << "(double) " << (double)a << std::endl;
+    std::cout << "(float) " << (float)a << std::endl;
+    std::cout << "(string) " << (std::string)a << std::endl;
+
     //++,-- Test
     std::cout << std::endl;
-    std::cout << "++a " << ++a << std::endl;
     std::cout << "a++ " << a++ << std::endl;
-    std::cout << "--a " << --a << std::endl;
+    std::cout << "++a " << ++a << std::endl;
     std::cout << "a-- " << a-- << std::endl;
+    std::cout << "--a " << --a << std::endl;
+
+    a += 666;
+    a -= 123;
+    a *= 3.14;
+    a /= 2.71f;
+
+    std::cout << "a after some manipulations: " << a << std::endl;
 
     //Miscellaneous test
     std::cout << std::endl;
