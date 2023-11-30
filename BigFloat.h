@@ -77,17 +77,34 @@ public:
     friend BigFloat operator+(const BigFloat& left, const int& int_right);
     friend BigFloat operator+(const BigFloat& left, const double& double_right);
 
+    BigFloat& operator+=(const BigFloat& right_);
+    BigFloat& operator+=(const int& int_right);
+    BigFloat& operator+=(const double& double_right);
+
     friend BigFloat operator-(const BigFloat& left_, const BigFloat& right_);
     friend BigFloat operator-(const BigFloat& left, const int& int_right);
     friend BigFloat operator-(const BigFloat& left, const double& double_right);
+
+    BigFloat& operator-=(const BigFloat& right_);
+    BigFloat& operator-=(const int& int_right);
+    BigFloat& operator-=(const double& double_right);
 
     friend BigFloat operator*(const BigFloat& left, const BigFloat& right);
     friend BigFloat operator*(const BigFloat& left, const int& int_right);
     friend BigFloat operator*(const BigFloat& left, const double& double_right);
 
+    BigFloat& operator*=(const BigFloat& right);
+    BigFloat& operator*=(const int& int_right);
+    BigFloat& operator*=(const double& double_right);
+
     friend BigFloat operator/(const BigFloat& left, const BigFloat& right);
     friend BigFloat operator/(const BigFloat& left, const int& int_right);
     friend BigFloat operator/(const BigFloat& left, const double& double_right);
+    
+    BigFloat& operator/=(const BigFloat& right);
+    BigFloat& operator/=(const int& int_right);
+    BigFloat& operator/=(const double& double_right);
+
     static BigFloat PrecDiv(const BigFloat& left, const BigFloat& right, int div_precision);
     static BigFloat PrecDiv(const BigFloat& left, const int& int_right, int div_precision);
     static BigFloat PrecDiv(const BigFloat& left, const double& double_right, int div_precision);
@@ -95,24 +112,29 @@ public:
     friend BigFloat operator%(const BigFloat& left, const BigFloat& right);
     friend BigFloat operator%(const BigFloat& left, const int& int_right);
 
+    BigFloat& operator%=(const BigFloat& right);
+    BigFloat& operator%=(const int& int_right);
+
     static BigFloat Power(const BigFloat& left, const BigFloat& right, int div_precision = 0);
     static BigFloat Power(const BigFloat& left, const int& int_right, int div_precision = 0);
     static BigFloat Power(const BigFloat& left, const double& double_right, int div_precision = 0);
 
-    BigFloat& operator++(int i)
+    BigFloat operator++(int)
     {
+        BigFloat temp = *this;
         *this = *this + 1;
-        return *this;
+        return temp;
     };
     BigFloat& operator++()
     {
         *this = *this + 1;
         return *this;
     };
-    BigFloat& operator--(int i)
+    BigFloat operator--(int)
     {
+        BigFloat temp = *this;
         *this = *this - 1;
-        return *this;
+        return temp;
     };
     BigFloat& operator--()
     {
@@ -149,11 +171,17 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const BigFloat& right);
     friend std::istream& operator>>(std::istream& in, BigFloat& right);
 
+    //Conversion Operators
+    operator double() const;
+    operator float() const;
+    operator std::string() const;
+
     //Transformation Methods
     double ToDouble() const;
     float ToFloat() const;
     std::string ToString() const;
     void SetPrecision(int prec); //Approximate number or Increase number decimals
+
 
     void LeadTrim(); //Remove number leading zeros, utilized by Operations without sign
     void TrailTrim(); //Remove number non significant trailing zeros
